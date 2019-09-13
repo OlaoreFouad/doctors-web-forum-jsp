@@ -1,0 +1,132 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 28, 2019, 6:57:14 AM
+    Author     : hp
+*/
+
+body {
+    background-color: #245269;
+}
+
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 28, 2019, 6:56:42 AM
+    Author     : hp
+*/
+
+@font-face {
+    src: url('../../fonts/Raleway-Regular.ttf');
+    font-family: raleway-regular;
+}
+
+.raleway-regular {
+    font-family: 'raleway-regular';
+}
+
+* {
+    font-family: 'raleway-regular';
+}
+
+.register-header {
+    color: white;
+    text-align: center;
+    padding-bottom: 0;
+    margin-top: 2vh;
+    margin-bottom: 5px;
+}
+
+.register-header-secondary {
+    color: white;
+    text-align: center;
+}
+
+.register-header-secondary small {
+    font-size: 1em;
+}
+
+.register-card {
+    width: 400px;
+    margin: 10px auto 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 7px;
+}
+
+
+.register-card .register-fields {
+    margin: 10px 0;
+    width: 98%;
+    height: 29px;
+    padding: 3px;
+    border: 1px solid gray;
+    border-radius: 6px;
+    color: black;
+}
+
+.register-card .register-fields:focus {
+    outline: none;
+}
+
+[type="checkbox"] {
+    margin: 5px 0;
+}
+
+.register-card form button {
+    color: white;
+    background-color: #00bd9d;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+    outline: none;
+    border: none;
+}
+
+.register-card form button:hover {
+    cursor: pointer;
+}
+
+.error-msg {
+    color: red;
+}
+
+.back-button {
+    color: white;
+    background-color: #218380;
+    outline: none;
+    border: none;
+    margin: 5px;
+    padding: 7px;
+}
+
+.back-button:hover {
+    cursor: pointer;
+}
+
+.login-link {
+    text-decoration: none;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+.exp-label {
+    text-align: left;
+}
+
+@media(max-width: 410px) {
+    .login-card {
+        width: 100%;
+    }
+}
+
+

@@ -1,0 +1,159 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Sep 9, 2019, 11:04:49 AM
+    Author     : hp
+*/
+
+@font-face {
+    src: url('../fonts/Raleway-Regular.ttf');
+    font-family: raleway;
+}
+
+* {
+    font-family: 'raleway';
+}
+
+.raleway-regular {
+    font-family: 'raleway';
+}
+
+.section-profile {
+    padding: 1% 2%;
+}
+
+.profile-data-grid {
+    display: grid;
+    grid-template-columns: 25% 65%;
+    grid-gap: 20px;
+}
+
+.profile-data {
+    background-color: white;
+    border-top: 2px solid lightblue;
+    border-radius: 3px;
+    box-shadow: 3px 3px 5px lightgray;
+    padding: 15px;
+}
+
+.profile-data-top {
+    text-align: center;
+}
+
+.profile-data-top img {
+    height: 100px;
+}
+
+.profile-data-top .profile-fullname {
+    font-size: 1.8rem;
+    font-weight: bolder;
+}
+
+.profile-data-bottom .other-data {
+    padding: 2px;
+    margin-top: 20px;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    display: flex;
+}
+
+.other-data .other-data-key {
+    font-weight: bolder;
+    font-size: 1.7rem;
+}
+
+.other-data .other-data-value {
+    margin-left: auto;
+}
+
+.profile-data-about {
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 3px 3px 5px lightgray;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.profile-data-about > p {
+    color: white;
+    border-radius: 3px;
+    background-color: lightblue;
+    font-weight: 1.9rem;
+    width: 100%;
+    padding: 5px;
+}
+
+.about-data {
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    padding: 10px;
+}
+
+.about-data-key {
+    font-size: 1.8rem;
+    font-weight: bolder;
+}
+
+.about-data-value {
+    line-height: .5;
+}
+
+.profile-data-activity {
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 3px 3px 5px lightgray;
+    padding: 10px;
+}
+
+.profile-data-activity > p {
+    width: 100%;
+    padding: 10px;
+    background-color: lightblue;
+    color: white;
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.post {
+    padding: 8px;
+    border-bottom: 2px solid lightgray;
+}
+
+.post-image {
+    height: 80px;
+}
+
+.post-top {
+    display: flex;
+}
+
+.post-author {
+    color: black;
+    font-weight: bolder;
+    font-size: 1.9rem;
+    margin-left: 3px;
+}
+
+.post-date {
+    color: gray;
+}
+
+.post-data {
+    margin-left: 10px;
+    margin-top: 8px;
+}
+
+.post-content {
+    color: gray;
+    margin-top: 5px;
+    text-indent: 20px;
+}
+
+.post-comments {
+    display: flex;
+    justify-content: flex-end;
+    color: black;
+}

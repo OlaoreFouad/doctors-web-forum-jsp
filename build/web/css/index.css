@@ -1,0 +1,41 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Sep 9, 2019, 12:32:44 PM
+    Author     : hp
+*/
+
+@font-face {
+    src: url('../fonts/Raleway-Regular.ttf');
+    font-family: raleway;
+}
+
+* {
+    font-family: 'raleway';
+}
+
+.section-disclaimer {
+    width: 80%;
+    margin: 20px auto 10px auto;
+    background-color: #FEF2E0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+h4 {
+    padding: 3px;
+}
+
+h4 img {
+    height: 50px;
+}
+
+.section-disclaimer p {
+    color: gray;
+    font-size: 1.7rem;
+    text-indent: 10px;
+}
+
