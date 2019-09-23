@@ -19,6 +19,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import models.Doctor;
+import models.Reply;
 import models.Topic;
 import utils.Encode;
 
@@ -216,7 +217,7 @@ public class DatabaseHandler {
         List<Topic> topics = new ArrayList<>();
         
         try {
-            statement = connection.prepareStatement("SELECT * FROM topics");
+            statement = connection.prepareStatement("SELECT * FROM topics ORDER BY createdAt DESC");
             
             ResultSet rs = statement.executeQuery();
             
@@ -235,14 +236,131 @@ public class DatabaseHandler {
                     
                     topics.add(topic);
                 }
-                close();
             }
-            
+            close();
         } catch(SQLException e) {
             e.printStackTrace();
         }
+        
+        
+        
         return topics;
         
+    }
+    
+    public void addReply(Reply reply) {
+        if (connection != null) {
+            try {
+                statement = connection.prepareStatement("INSERT INTO replies VALUES (?, ?, ?, ?, ?)");
+                statement.setString(1, reply.getId());
+                statement.setString(2, reply.getContent());
+                statement.setString(3, reply.getDid());
+                statement.setString(4, reply.getTid());
+                statement.setLong(5, reply.getCreatedAt());
+                
+                int a = statement.executeUpdate();
+                
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    public void deleteUser(String id) {
+        if (connection != null) {
+            try {
+                statement = connection.prepareStatement("DELETE FROM doctors WHERE id = ?");
+                statement.setString(1, id);
+                
+                int a = statement.executeUpdate();
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+            
+        }
+    }
+    
+    public List<Doctor> getDoctors() {
+        List<Doctor> doctors = new ArrayList<>();
+        if (connection != null) {
+            try {
+                statement = connection.prepareStatement("SELECT * FROM doctors");
+                
+                ResultSet rs = statement.executeQuery();
+                if (rs != null) {
+                    while (rs.next()) {
+                        Doctor doctor = new Doctor();
+                        doctor.setAwards(rs.getString(DBUtils.KEY_AWARDS));
+                        doctor.setEmail(rs.getString(DBUtils.KEY_EMAIL));
+                        doctor.setExperience(rs.getInt(DBUtils.KEY_EXP));
+                        doctor.setFullname(rs.getString(DBUtils.KEY_FULLNAME));
+                        doctor.setId(rs.getString(DBUtils.KEY_ID));
+                        doctor.setPassword(rs.getString(DBUtils.KEY_PASSWORD));
+                        doctor.setProfessions(rs.getString(DBUtils.KEY_PROF));
+                        doctor.setQualifications(rs.getString(DBUtils.KEY_QUAL));
+                        doctor.setUsername(rs.getString(DBUtils.KEY_USERNAME));
+                        doctor.setIsAdmin(rs.getInt(DBUtils.KEY_ISADMIN) == 0 ? false : true);
+                        
+                        doctors.add(doctor);
+
+                    }
+                }
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+            
+        }
+        
+        return doctors;
+    }
+    
+    public List<Reply> getReplies(String tid) {
+        
+        List<Reply> replies = new ArrayList<>();
+        
+        if (connection != null) {
+            try {
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/webForum", "root", "");
+                statement = connection.prepareStatement("SELECT * FROM replies WHERE tid = ? ORDER BY createdAt DESC");
+                statement.setString(1, tid);
+                
+                ResultSet rs = statement.executeQuery();
+                
+                if (rs != null) {
+                    while(rs.next()) {
+                        Reply reply = new Reply();
+                        
+                        reply.setContent(rs.getString("content"));
+                        reply.setCreatedAt(rs.getLong("createdAt"));
+                        reply.setDid(rs.getString("did"));
+                        reply.setTid(rs.getString("tid"));
+                        reply.setId(rs.getString("id"));
+                        
+                        replies.add(reply);
+                        
+                    }
+                }
+                
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return replies;
+    }
+    
+    public void addView(String tid, int views) {
+        if (connection != null) {
+            try {
+                statement = connection.prepareStatement("UPDATE topics SET views = ? WHERE id = ?");
+                statement.setInt(1, views+1);
+                statement.setString(2, tid);
+                
+                int a = statement.executeUpdate();
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
     
     public List<Topic> getTopicsByUser(String did) {
@@ -251,7 +369,6 @@ public class DatabaseHandler {
         if (connection != null) {
             try {
                 statement = connection.prepareStatement("SELECT * FROM topics WHERE did = ?");
-                System.out.println("Did: " + did);
                 statement.setString(1, did);
                 
                 ResultSet rs = statement.executeQuery();
@@ -280,6 +397,99 @@ public class DatabaseHandler {
         }
         
         return topics;
+    }
+    
+    public Topic getTopic(String id) {
+        
+        Topic topic = null;
+        
+        if (connection != null) {
+            try {
+                statement = connection.prepareStatement("SELECT * FROM topics WHERE id = ?");
+                statement.setString(1, id);
+                
+                ResultSet rs = statement.executeQuery();
+                if (rs != null) {
+                    while(rs.next()) {
+                        topic = setTopic(rs, id);
+                    }
+                }
+                
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return topic;
+    }
+    
+    public Doctor getDoctor(String id) {
+        
+        Doctor doctor = null;
+        
+        if (connection != null) {
+            try {
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/webForum", "root", "");
+                statement = connection.prepareStatement("SELECT * FROM doctors WHERE id = ?");
+                statement.setString(1, id);
+                
+                ResultSet rs = statement.executeQuery();
+                if (rs != null) {
+                    doctor = new Doctor();
+                    while(rs.next()) {
+                        doctor.setId(rs.getString("id"));
+                        doctor.setAwards(rs.getString(DBUtils.KEY_AWARDS));
+                        doctor.setEmail(rs.getString(DBUtils.KEY_EMAIL));
+                        doctor.setExperience(rs.getInt(DBUtils.KEY_EXP));
+                        doctor.setFullname(rs.getString(DBUtils.KEY_FULLNAME));
+                        doctor.setUsername(rs.getString(DBUtils.KEY_USERNAME));
+                        doctor.setIsAdmin(rs.getInt(DBUtils.KEY_ISADMIN) == 0 ? false : true);
+                        doctor.setProfessions(rs.getString(DBUtils.KEY_PROF));
+                        doctor.setQualifications(rs.getString(DBUtils.KEY_QUAL));
+                    }
+                }
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+            
+        }
+        
+        return doctor;
+    }
+    
+    private Topic setTopic(ResultSet rs, String id) throws SQLException {
+        Topic topic = new Topic();
+        
+        topic.setId(id);
+        topic.setContent(rs.getString(DBUtils.KEY_TOPIC_CONTENT));
+        topic.setCategories(rs.getString(DBUtils.KEY_TOPIC_CATEGORIES));
+        topic.setCreatedAt(rs.getLong(DBUtils.KEY_TOPIC_CREATEDAT));
+        topic.setDid(rs.getString("did"));
+        topic.setTags(rs.getString(DBUtils.KEY_TOPIC_TAGS));
+        topic.setTitle(rs.getString(DBUtils.KEY_TOPIC_TITLE));
+        topic.setViews(rs.getInt(DBUtils.KEY_TOPIC_VIEWS));
+        
+        return topic;
+    }
+    
+    public int getDoctorsCount() {
+        int count = 0;
+        if (connection != null) {
+            try {
+                statement = connection.prepareStatement("SELECT * FROM doctors");
+                
+                ResultSet rs = statement.executeQuery();
+                if (rs != null) {
+                    while(rs.next()) {
+                        count++;
+                    }
+                }
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return count;
     }
     
     public void close() throws SQLException {

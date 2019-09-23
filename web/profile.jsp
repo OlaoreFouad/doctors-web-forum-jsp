@@ -25,11 +25,10 @@
         <link rel="stylesheet" href="vendor/bootstrap/v4/bootstrap-grid.css">
         
         <%
-            
             Doctor doctor = null;
             int awards = 0;
             List<Topic> topics = null;
-            DatabaseHandler db;
+            DatabaseHandler db = null;
             
             if (session.getAttribute("currentUser") != null) {
                 doctor = (Doctor) session.getAttribute("currentUser");
@@ -118,7 +117,7 @@
                                     <%= topic.getContent() %>
                                 </p>
                                 <p class="post-comments">
-                                    Comments (33)
+                                    Comments (<%= db.getReplies(topic.getId()).size() %>)
                                 </p>
                             </div>
                         </div>

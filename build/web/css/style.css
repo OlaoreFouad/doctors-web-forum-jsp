@@ -7,7 +7,6 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #ffffff;
 }
 main {
   min-height: 400px;
@@ -3436,7 +3435,7 @@ select {
   border-color: #f9bc64;
 }
 body {
-  background-color: #f8f9fa;
+  background-image: url('../images/170px-Caduceus.svg');
 }
 a,
 a:visited,

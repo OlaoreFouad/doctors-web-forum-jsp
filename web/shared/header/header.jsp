@@ -4,6 +4,7 @@
     Author     : hp
 --%>
 
+<%@page import="data.DatabaseHandler"%>
 <%@page import="models.Doctor"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c"%>
@@ -28,6 +29,8 @@
             if (session.getAttribute("currentUser") != null) {
                 d = (Doctor) session.getAttribute("currentUser");
             }
+            
+            DatabaseHandler data = new DatabaseHandler();
         %>
         
         <header>
@@ -74,8 +77,9 @@
                     <nav class="dropdown dropdown--design-01" data-dropdown-list="user">
                         <div>
                             <ul class="dropdown__catalog">
+                                <li><a href="./">Home</a></li>
+                                <% if (d.getIsAdmin()) { %><li><a href="admin.jsp">Admin Dashboard</a></li><% } %>
                                 <li><a href="profile.jsp">Profile</a></li>
-                                <% if (d.getIsAdmin()) { %><li><a href="LogoutServlet">Admin Dashboard</a></li><% } %>
                                 <li><a href="LogoutServlet">Logout</a></li>
                             </ul>
                         </div>
@@ -92,6 +96,7 @@
                 }
             %>
         </div>
+        <p style="padding: 2px">Registered users: <%= data.getDoctorsCount() %></p>
     </header>
     </body>
 </html>

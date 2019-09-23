@@ -4,6 +4,7 @@
     Author     : Foodie Olaore
 --%>
 
+<%@page import="models.Reply"%>
 <%@page import="models.Topic"%>
 <%@page import="java.util.List"%>
 <%@page import="data.DatabaseHandler"%>
@@ -31,7 +32,7 @@
     <body>
         
         <%
-            Doctor doctor = null;
+            Doctor doctor;
             if (session.getAttribute("currentUser") != null) {
                 doctor = (Doctor) session.getAttribute("currentUser");
             }
@@ -64,20 +65,22 @@
                 <div class="posts__head">
                     <div class="posts__topic">Topic</div>
                     <div class="posts__category">Category</div>
-                    <div class="posts__users">Users</div>
+                    <div class="posts__users">User</div>
                     <div class="posts__replies">Replies</div>
                     <div class="posts__views">Views</div>
                     <div class="posts__activity">Activity</div>
                 </div>
                 <%
                     for (Topic topic: topics) {
+                        List<Reply> replies = db.getReplies(topic.getId());
+                        Doctor doc = db.getDoctor(topic.getDid());
                 %>
                 <div class="posts__body">
                     <div class="posts__item">
                         <div class="posts__section-left">
                             <div class="posts__topic">
                                 <div class="posts__content">
-                                    <a href="#">
+                                    <a href="<%= "topic.jsp?id=" + topic.getId() %>">
                                         <h3><%= topic.getTitle() %></h3>
                                     </a>
                                 </div>
@@ -85,25 +88,20 @@
                             <div class="posts__category"><a href="#" class="category"><i class="bg-368f8b"></i><%= topic.getCategories() %></a></div>
                         </div>
                         <div class="posts__section-right">
-                            <div class="posts__users">
+                            <div class="posts__users">  
                                 <div>
-                                    <a href="#" class="avatar"><img src="fonts/icons/avatars/A.svg" alt="avatar"></a>
-                                </div>
-                                <div>
-                                    <a href="#" class="avatar"><img src="fonts/icons/avatars/G.svg" alt="avatar"></a>
-                                </div>
-                                <div>
-                                    <a href="#" class="avatar"><img src="fonts/icons/avatars/P.svg" alt="avatar"></a>
+                                    <a href="#" class="avatar"><img 
+                                            src="<%= "fonts/icons/avatars/" + doc.getUsername().toUpperCase().charAt(0) + ".svg" %>" 
+                                            alt="avatar"></a>
                                 </div>
                             </div>
-                            <div class="posts__replies">0</div>
+                            <div class="posts__replies"><%= replies.size()  %></div>
                             <div class="posts__views"><%= topic.getViews() %></div>
                             <div class="posts__activity">0</div>
                         </div>
                     </div>
                 </div>
                 <%
-                
                     }
                 %>
             </div>
